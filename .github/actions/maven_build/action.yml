@@ -1,0 +1,9 @@
+name: 'Maven Build'
+description: 'Build the project with Maven'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Build with Maven
+      shell: bash
+      run: mvn -B package --file pom.xml
