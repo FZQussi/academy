@@ -30,4 +30,4 @@ jobs:
     - name: Build with Maven
       uses: ./.github/actions/maven_build
     - name: Build Docker image
-      run: docker build . --file Dockerfile --tag academy:$(date +%s)
+      uses: ./.github/actions/docker_build

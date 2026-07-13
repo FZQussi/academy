@@ -1,0 +1,15 @@
+name: 'Docker Build'
+description: 'Build the Docker image'
+
+inputs:
+  path_dockerfile:
+    description: 'Path to the Dockerfile'
+    required: false
+    default: 'Dockerfile'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Build Docker image
+      shell: bash
+      run: docker build . --file Dockerfile --tag academy:$(date +%s)
