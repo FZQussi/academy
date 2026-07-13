@@ -7,14 +7,21 @@
 # documentation.
 
 name: Java CI with Maven
+run-name: Docker build and push to ${{ inputs.environment }}
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
-
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'Test'
+        type: choice
+        options:
+          - Test
+          - Int
+          - E2E
+          - Prod
 env:
   Image_Name: academy
   Tag_Name: v1
@@ -66,6 +73,7 @@ jobs:
   list-images:
     runs-on: ubuntu-latest
     needs: build
+    environment: ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v4
     - name: Download Docker image artifact
