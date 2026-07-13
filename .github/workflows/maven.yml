@@ -51,11 +51,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - uses: actions/checkout@v4
     - name: Download Docker image artifact
       uses: actions/download-artifact@v4
       with:
         name: ${{ env.artifact_name }}
     - name: Load Docker image
       run: docker load -i $Image_Name.tar
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Push Docker image
+      uses: ./.github/actions/docker_push
+      with:
+        docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+        image_reference: ${{ env.Image_Name }}:${{ env.Tag_Name }}
     - name: List Docker images
       run: docker image ls
