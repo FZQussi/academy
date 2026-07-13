@@ -56,7 +56,7 @@ jobs:
         image_name: ${{ env.Image_Name }}
         tag_name: ${{ env.Tag_Name }}
     - name: Save Docker image to file
-      run: docker save -o $Image_Name.tar $Image_Name:$Tag_Name
+      run: docker save -o ${{ env.Image_Name }}.tar ${{ env.Image_Name }}:${{ env.Tag_Name }}
     - name: Upload Docker image artifact
       uses: actions/upload-artifact@v4
       with:
